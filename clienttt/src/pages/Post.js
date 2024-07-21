@@ -5,7 +5,7 @@ import axios from 'axios'
 const Post = () => {
   const location = useLocation();
   const path = location.pathname.split('/')[2];
-  axios.get('http://localhost:5000/auth/login/success', { withCredentials: true })
+  axios.get('https://login-page-pi-umber.vercel.app/auth/login/success', { withCredentials: true })
   .then(response => {
     console.log(response.data);
   })
