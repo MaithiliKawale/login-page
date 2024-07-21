@@ -3,7 +3,7 @@ const passport = require("passport");
 
 const router = express.Router();
 
-const CLIENT_URL = "https://login-page-frontend-seven.vercel.app";
+const CLIENT_URL = "http://localhost:3000";
 
 router.get("/login/success", (req, res) => {
   if (req.user) {
@@ -41,11 +41,11 @@ router.get("/logout", (req, res, next) => {
 });
 
 // router.get("/google", passport.authenticate("google", { scope: ["profile"] }))
-router.get("/google", passport.authenticate("google", { scope: ["profile", "email"], prompt: 'consent' }));
+router.get("https://login-page-pi-umber.vercel.app/google", passport.authenticate("google", { scope: ["profile", "email"], prompt: 'consent' }));
 
 
 router.get(
-  "/google/callback",
+  "https://login-page-pi-umber.vercel.app/google/callback",
   passport.authenticate("google", {
     successRedirect: CLIENT_URL,
     failureRedirect: "/login/failed",
@@ -63,13 +63,13 @@ router.get(
 //   });
 
 
-router.get("/github", passport.authenticate("github", { scope: ["profile", "email"], prompt: 'consent' }));
+router.get("https://login-page-pi-umber.vercel.app/github", passport.authenticate("github", { scope: ["profile", "email"], prompt: 'consent' }));
 
 router.get(
-  "/github/callback",
+  "https://login-page-pi-umber.vercel.app/github/callback",
   passport.authenticate("github", {
     successRedirect: CLIENT_URL,
-    failureRedirect: "/login/failed",
+    failureRedirect: "https://login-page-pi-umber.vercel.app/login/failed",
   })
 );
 
