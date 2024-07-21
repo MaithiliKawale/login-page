@@ -30,7 +30,7 @@
 
 // app.use(
 //     cors({
-//       origin: "http://localhost:3000",
+//       origin: "https://login-page-frontend-seven.vercel.app/",
 //       methods: "GET,POST,PUT,DELETE",
 //       credentials: true,
 //     })
@@ -99,7 +99,7 @@ app.use(passport.session());
 
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin: 'https://login-page-frontend-seven.vercel.app/',
     methods: 'GET,POST,PUT,DELETE',
     credentials: true,
   })

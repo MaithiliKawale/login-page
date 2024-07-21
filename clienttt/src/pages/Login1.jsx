@@ -1,6 +1,6 @@
 import React from 'react';
 import Google from '../imgs/google.png';
-import Facebook from '../imgs/facebook.png';
+// import Facebook from '../imgs/facebook.png';
 import Github from '../imgs/github.png';
 
 const Login1 = () => {

@@ -3,7 +3,7 @@ const passport = require("passport");
 
 const router = express.Router();
 
-const CLIENT_URL = "http://localhost:3000";
+const CLIENT_URL = "https://login-page-frontend-seven.vercel.app";
 
 router.get("/login/success", (req, res) => {
   if (req.user) {

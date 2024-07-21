@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 const Navbar = ({user}) => {
 
   const logout = () => {
-    window.open("http://localhost:5000/auth/logout", "_self");
+    window.open("https://login-page-pi-umber.vercel.app/auth/logout", "_self");
   };
 
   return (
