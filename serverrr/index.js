@@ -99,7 +99,7 @@ app.use(passport.session());
 
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin: 'https://login-page-frontend-seven.vercel.app',
     methods: 'GET,POST,PUT,DELETE',
     credentials: true,
   })
@@ -114,6 +114,6 @@ app.use((req, res, next) => {
 
 app.use('/auth', authRoute);
 
-app.listen(5000, () => {
+app.listen("https://login-page-pi-umber.vercel.app", () => {
   console.log('server is running');
 });
