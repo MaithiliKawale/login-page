@@ -41,7 +41,7 @@ router.get("/logout", (req, res, next) => {
 });
 
 // router.get("/google", passport.authenticate("google", { scope: ["profile"] }))
-router.get("/google", passport.authenticate("google", { scope: ["profile", "email"], prompt: 'consent' }));
+router.get("/google", passport.authenticate("google",  { scope: ["profile"] }));
 
 
 router.get(
