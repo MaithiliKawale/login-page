@@ -12,7 +12,7 @@ const Navbar = ({user}) => {
     <div className='navbar'>
         <span className='logo'>
           <Link className="link" to='/'>
-            Login App
+            My Blog
           </Link>
         </span>{
           user ? (
