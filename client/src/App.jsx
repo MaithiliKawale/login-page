@@ -13,7 +13,7 @@ function App() {
 
   useEffect(() => {
     const getUser = () => {
-      fetch("https://login-page-one-orcin.vercel.app/auth/login/success", {
+      fetch("http://localhost:5000/auth/login/success", {
         method: "GET",
         credentials: "include",
         headers: {
