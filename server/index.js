@@ -99,7 +99,7 @@ app.use(passport.session());
 
 app.use(
   cors({
-    origin: 'https://login-page-frontend-kappa.vercel.app',
+    origin: 'https://login-page-frontend-kappa.vercel.app/',
     methods: 'GET,POST,PUT,DELETE',
     credentials: true,
   })
