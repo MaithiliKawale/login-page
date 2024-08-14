@@ -37,11 +37,15 @@ app.use(passport.session());
 
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin: 'https://login-page-iugn.onrender.com',
     methods: 'GET,POST,PUT,DELETE',
     credentials: true,
   })
 );
+
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
 
 // Example: Log received cookies
 app.use((req, res, next) => {

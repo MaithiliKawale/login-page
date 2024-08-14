@@ -6,11 +6,11 @@ import Github from '../imgs/github.png';
 const Login1 = () => {
 
   const google = () => {
-    window.open("http://localhost:5000/auth/google", "_self");
+    window.open("https://login-page-backend-me2p.onrender.com/auth/google", "_self");
   };
 
   const github = () => {
-    window.open("http://localhost:5000/auth/github", "_self");
+    window.open("https://login-page-backend-me2p.onrender.com/auth/github", "_self");
   };
   // const facebook = () => {
   //   window.open("https://login-page-pi-umber.vercel.app/auth/facebook", "_self")

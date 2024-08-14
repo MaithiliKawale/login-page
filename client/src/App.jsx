@@ -13,7 +13,7 @@ function App() {
 
   useEffect(() => {
     const getUser = () => {
-      fetch("http://localhost:5000/auth/login/success", {
+      fetch("https://login-page-backend-me2p.onrender.com/auth/login/success", {
         method: "GET",
         credentials: "include",
         headers: {
