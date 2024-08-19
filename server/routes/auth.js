@@ -45,7 +45,7 @@ router.get("/google", passport.authenticate("google", { scope: ["profile", "emai
 
 
 router.get(
-  "/google/callback",
+  "/auth/google/callback",
   passport.authenticate("google", {
     successRedirect: CLIENT_URL,
     failureRedirect: "/login/failed",
