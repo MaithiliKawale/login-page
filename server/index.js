@@ -96,63 +96,73 @@
 
 
 
-const express = require('express');
-const session = require('express-session');
-const cookieParser = require('cookie-parser');  // Import cookie-parser module
-const passportSetup = require('./passport');
-const passport = require('passport');
-const authRoute = require('./routes/auth');
-const cors = require('cors');
-const app = express();
+const http = require('http');
+const url = require('url');
+const querystring = require('querystring');
+const { parse } = require('cookie');
+const crypto = require('crypto');
 
-// Trust the first proxy, necessary when running behind a proxy like in Heroku or Render
-app.set('trust proxy', 1);
+const PORT = 5000;
 
-// Use cookie-parser to parse cookies
-app.use(cookieParser());
+const sessions = {}; // In-memory session store
 
-// Session configuration
-app.use(session({
-  name: 'session', // Custom name for the session ID cookie
-  secret: 'rhvg657656hbg67687vg341432hj', // Secret for signing cookies
-  resave: false, // Don't save session if unmodified
-  saveUninitialized: false, // Don't create session until something is stored
-  cookie: {
-    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-    secure: process.env.NODE_ENV === 'production', // Enable for production (requires HTTPS)
-    httpOnly: true, // Client-side JavaScript can't access the cookie
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // 'none' for cross-site cookies in production, 'lax' for development
+function generateSessionId() {
+  return crypto.randomBytes(16).toString('hex');
+}
+
+function setCookie(res, name, value, options = {}) {
+  const cookieParts = [`${name}=${value}`];
+  if (options.maxAge) cookieParts.push(`Max-Age=${options.maxAge}`);
+  if (options.httpOnly) cookieParts.push(`HttpOnly`);
+  if (options.secure) cookieParts.push(`Secure`);
+  if (options.sameSite) cookieParts.push(`SameSite=${options.sameSite}`);
+  res.setHeader('Set-Cookie', cookieParts.join('; '));
+}
+
+function handleRequest(req, res) {
+  const parsedUrl = url.parse(req.url);
+  const parsedCookies = parse(req.headers.cookie || '');
+
+  if (parsedUrl.pathname === '/') {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('Hello World!');
+  } else if (parsedUrl.pathname === '/auth') {
+    // Basic auth simulation
+    const sessionId = parsedCookies['session'] || generateSessionId();
+    sessions[sessionId] = { user: 'authenticatedUser' };
+    setCookie(res, 'session', sessionId, { maxAge: 7 * 24 * 60 * 60, httpOnly: true, secure: true, sameSite: 'None' });
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('User authenticated!');
+  } else if (parsedUrl.pathname === '/logout') {
+    const sessionId = parsedCookies['session'];
+    if (sessionId && sessions[sessionId]) {
+      delete sessions[sessionId];
+      setCookie(res, 'session', '', { maxAge: -1 }); // Expire the cookie
+    }
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('User logged out!');
+  } else {
+    res.writeHead(404, { 'Content-Type': 'text/plain' });
+    res.end('Not Found');
   }
-}));
+}
 
-// Initialize passport for authentication
-app.use(passport.initialize());
-app.use(passport.session());
-
-// Enable CORS to allow requests from your frontend
-app.use(
-  cors({
-    origin: 'https://login-page-iugn.onrender.com', // Your frontend URL
-    methods: 'GET,POST,PUT,DELETE',
-    credentials: true, // Allow cookies to be sent
-  })
-);
-
-// Example route to check the server
-app.get('/', (req, res) => {
-  res.send('Hello World!');
+const server = http.createServer((req, res) => {
+  if (req.method === 'OPTIONS') {
+    res.writeHead(204, {
+      'Access-Control-Allow-Origin': 'https://login-page-iugn.onrender.com',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
+      'Access-Control-Allow-Credentials': 'true',
+      'Access-Control-Allow-Headers': 'Content-Type'
+    });
+    res.end();
+  } else {
+    res.setHeader('Access-Control-Allow-Origin', 'https://login-page-iugn.onrender.com');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    handleRequest(req, res);
+  }
 });
 
-// Middleware to log received cookies (for debugging purposes)
-app.use((req, res, next) => {
-  console.log('Received cookies:', req.cookies);
-  next();
-});
-
-// Authentication routes
-app.use('/auth', authRoute);
-
-// Start the server
-app.listen(5000, () => {
-  console.log('Server is running on port 5000');
+server.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
