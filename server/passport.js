@@ -6,8 +6,7 @@ var FacebookStrategy = require("passport-facebook").Strategy;
 
 
 const GOOGLE_CLIENT_ID = "1080589034504-i642v78sndouko6r2i3q4s8ht348nqo1.apps.googleusercontent.com";
-const GOOGLE_CLIENT_SECRET = "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";
-
+const GOOGLE_CLIENT_SECRET = "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";
 
 const GITHUB_CLIENT_ID = "Ov23liQwppIuNz8Gj6Ev";
 const GITHUB_CLIENT_SECRET = "213594944f4d8686d93182499d7c87343bac0f8b";
